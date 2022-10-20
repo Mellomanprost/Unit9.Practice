@@ -40,7 +40,7 @@ namespace Unit9.Practice
                             case 2:     // Вариант кода, в котором происходит вызов исключения "StackOverflowException". Хотел использовать рекурсию, но для этого нужно делать отдельный try{}catch{} в самом методе.
                                 throw exceptionArray[iter];
                             case 3:     // Вариант кода, в котором происходит вызов исключения "FormatException". Дальше время стало поджимать и пришлось вызывать через throw.
-                                throw exceptionArray[iter];     
+                                throw exceptionArray[iter];
                             case 4:     // Вариант кода, в котором происходит вызов исключения "MyException".
                                 throw exceptionArray[iter];
                         }
@@ -75,7 +75,7 @@ namespace Unit9.Practice
                 {
                     Console.WriteLine($"Блок Exception - {ex}");
                 }
-                finally
+                finally     // Создан для разделения каждого исключения, возможности вызвать все исключения не прерывая выполнения программы и иметь возможность выйти.
                 {
                     Console.WriteLine("\nЕсли хотите выйти напишите - выход.\nЕсли хотите продолжить нажмите Enter.");
                     string exit = Console.ReadLine();
