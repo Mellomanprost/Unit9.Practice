@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Unit9.Practice
 {
+    /// <summary>
+    /// Класс содержащий основной код программы.
+    /// </summary>
     class Program
     {
 
@@ -88,7 +91,9 @@ namespace Unit9.Practice
             } while (!checkExit);
         }
     }
-
+    /// <summary>
+    /// Свой собственный класс исключения.
+    /// </summary>
     public class MyException : Exception
     {
         public MyException(string message) : base(message)

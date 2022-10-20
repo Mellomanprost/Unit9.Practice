@@ -6,23 +6,13 @@ using System.Threading.Tasks;
 
 namespace Unit9.Practice2
 {
+    /// <summary>
+    /// Класс содержащий основной код программы.
+    /// </summary>
     class Program
     {
         public delegate void Notify();
-        class MyEvent
-        {
-            public event Notify SomeEvent;
-
-            public void OnSomeEvent()
-            {
-                SomeEvent?.Invoke();
-            }
-
-        }
-
-        static void Handler()
-        {
-            List<string> listOfHuman = new List<string>
+        static List<string> listOfHuman = new List<string>      // Список фамлий для сортировки.
             {
                 "Сидоров",
                 "Иванов",
@@ -31,6 +21,21 @@ namespace Unit9.Practice2
                 "Васильев"
             };
 
+        /// <summary>
+        /// Класс объявляющий событие.
+        /// </summary>
+        class MyEvent
+        {
+            public event Notify SomeEvent;
+
+            public void OnSomeEvent()
+            {
+                SomeEvent?.Invoke();
+            }
+        }
+
+        static void Handler()
+        {
             try
             {
                 var userChoice = int.Parse(Console.ReadLine());
@@ -47,32 +52,41 @@ namespace Unit9.Practice2
                 }
                 else
                     throw new MyException("Введены неверные данные!");
-                foreach (var item in listOfHuman)
-                {
-                    Console.WriteLine(item);
-                }
-
+                WriteList(listOfHuman);
             }
-            catch(MyException exc)
+            catch (MyException exc)
             {
                 Console.WriteLine(exc.Message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
+            }
+        }
+
+        static void WriteList(List<string> humans)
+        {
+            foreach (var item in humans)
+            {
+                Console.WriteLine(item);
             }
         }
 
         static void Main(string[] args)
         {
             MyEvent myEvent = new MyEvent();
+            Console.WriteLine("Ваш список сотрудников: ");
+            WriteList(listOfHuman);
             Console.WriteLine("Для сортировки \"А-Я\" введите 1, для сортировки \"Я-А\" введите 2.");
             Console.Write("Выберите тип сортировки: ");
             myEvent.SomeEvent += Handler;
             myEvent.OnSomeEvent();
         }
-
     }
+
+    /// <summary>
+    /// Свой собственный класс исключения.
+    /// </summary>
     class MyException : Exception
     {
         public MyException(string message) : base(message)
