@@ -8,9 +8,10 @@ namespace Unit9.Practice
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            var exceptionArray = new Exception[] { new StackOverflowException(), new MyException("Невероятное исключение!"), new FormatException(), new IndexOutOfRangeException(), new DivideByZeroException() };
+            var exceptionArray = new Exception[] { new DivideByZeroException(), new IndexOutOfRangeException(), new StackOverflowException(), new FormatException(), new MyException("Собственное исключение.\nНевероятное исключение!") };
             bool checkExit = false;
             int iter = 0;
             do
@@ -21,36 +22,39 @@ namespace Unit9.Practice
                     {
                         switch (iter)
                         {
-                            case 0:
+                            case 0:     // Вариант кода, в котором происходит вызов исключения "DivideByZeroException".
                                 //throw exceptionArray[i];
                                 Console.WriteLine("Введите первое число: ");
                                 var number1 = int.Parse(Console.ReadLine());
-                                Console.WriteLine("Введите второе число: ");
+                                Console.WriteLine("Для вывода ошибки деления на ноль введите 0: ");
                                 var number2 = int.Parse(Console.ReadLine());
                                 var totalNumber = number1 / number2;
                                 continue;
-                            case 1:
+                            case 1:     // Вариант кода, в котором происходит вызов исключения "IndexOutOfRangeException".
                                 //throw exceptionArray[i];
                                 for (int k = 0; k < 7; k++)
                                 {
                                     Console.WriteLine($"Номер {k} в массиве - {exceptionArray[k]}");
                                 }
                                 continue;
-                            case 2:
+                            case 2:     // Вариант кода, в котором происходит вызов исключения "StackOverflowException". Хотел использовать рекурсию, но для этого нужно делать отдельный try{}catch{} в самом методе.
                                 throw exceptionArray[iter];
-                                //static void StackOverflow(string text)
-                                //{
-                                //    StackOverflow(text);
-                                //    Console.WriteLine(text);
-                                //}
-                                //StackOverflow("test");
-                                //continue;
-                            case 3:
-                                throw exceptionArray[iter];
-                            case 4:
+                            case 3:     // Вариант кода, в котором происходит вызов исключения "FormatException". Дальше время стало поджимать и пришлось вызывать через throw.
+                                throw exceptionArray[iter];     
+                            case 4:     // Вариант кода, в котором происходит вызов исключения "MyException".
                                 throw exceptionArray[iter];
                         }
                     } while (iter < 6);
+                }
+                catch (DivideByZeroException divByZeroEx)
+                {
+                    Console.WriteLine($"Блок DivideByZeroException:\nMessage - {divByZeroEx.Message}");
+                    Console.WriteLine($"Stack - {divByZeroEx}");
+                }
+                catch (IndexOutOfRangeException indOutOfRangeEx)
+                {
+                    Console.WriteLine($"Блок IndexOutOfRangeException:\nMessage - {indOutOfRangeEx.Message}");
+                    Console.WriteLine($"Stack - {indOutOfRangeEx}");
                 }
                 catch (StackOverflowException stackOverflowEx)
                 {
@@ -61,16 +65,6 @@ namespace Unit9.Practice
                 {
                     Console.WriteLine($"Блок FormatException:\nMessage - {argEx.Message}");
                     Console.WriteLine($"Stack - {argEx}");
-                }
-                catch (IndexOutOfRangeException indOutOfRangeEx)
-                {
-                    Console.WriteLine($"Блок IndexOutOfRangeException:\nMessage - {indOutOfRangeEx.Message}");
-                    Console.WriteLine($"Stack - {indOutOfRangeEx}");
-                }
-                catch (DivideByZeroException divByZeroEx)
-                {
-                    Console.WriteLine($"Блок DivideByZeroException:\nMessage - {divByZeroEx.Message}");
-                    Console.WriteLine($"Stack - {divByZeroEx}");
                 }
                 catch (MyException myEx)
                 {
@@ -83,18 +77,18 @@ namespace Unit9.Practice
                 }
                 finally
                 {
-                    Console.WriteLine("Если хотите продолжить нажмите Enter.\nДля выхода напишите - да\nХотите выйти?");
+                    Console.WriteLine("\nЕсли хотите выйти напишите - выход.\nЕсли хотите продолжить нажмите Enter.");
                     string exit = Console.ReadLine();
-                    if (exit == "Да" || exit == "да")
+                    if (exit == "Выход" || exit == "выход")
                     {
                         checkExit = true;
                     }
                     iter++;
                 }
-
             } while (!checkExit);
         }
     }
+
     public class MyException : Exception
     {
         public MyException(string message) : base(message)
